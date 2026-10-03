@@ -1,0 +1,993 @@
+@font-face {
+  font-family: "Ogg Medium";
+  src: url("https://dcym8fthxf5uu.cloudfront.net/fonts/247a073c-29f5-4a89-aa3a-741020f346fc/OggText-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --mx: 0;
+  --my: 0;
+  --back-opacity: 1;
+  --back-x: 0px;
+  --back-y: 0px;
+  --back-scale: 0.76;
+  --four-y: 10vh;
+  --four-scale: 0.78;
+  --bazaar-y: 20vh;
+  --blur-px: 0px;
+  --back-brightness: 1;
+  --bazaar-blur-px: 0px;
+  --bazaar-brightness: 1;
+  --bazaar-saturation: 1;
+  --shade-opacity: 1;
+  --shade-z: 2;
+  --shade-top-alpha: 0;
+  --shade-mid-alpha: 0;
+  --shade-bottom-alpha: 0;
+  --blur-tint: 6, 21, 38;
+  --title-y: 0px;
+  --title-scale: 1;
+  --title-opacity: 1;
+  --bridge-x: -50%;
+  --bridge-y: 0px;
+  --bridge-bottom: 5vh;
+  --bridge-width: 67.2vw;
+  --bridge-scale: 1.02;
+  --split-left-x: -50%;
+  --split-left-y: 0px;
+  --split-left-scale: 1;
+  --split-right-x: -50%;
+  --split-right-y: 0px;
+  --split-right-scale: 1;
+  --frame2-opacity: 0;
+  --frame2-x: -50%;
+  --frame2-y: -50%;
+  --frame2-scale: 1.06;
+  --intro-copy-y: 0px;
+  --intro-copy-opacity: 1;
+  --panel2-opacity: 0;
+  --panel2-y: -50%;
+  --panel3-opacity: 0;
+  --panel3-y: -50%;
+  --sights-opacity: 0;
+  --sights-controls-opacity: 0;
+  --sights-y: 0px;
+  --sights-enter-x: 420vw;
+  --sights-visibility: hidden;
+  --sights-shift: 0px;
+  --sights-scale: 1;
+  --sights-top: clamp(112px, 19vh, 220px);
+  --sights-screen-top: clamp(112px, 19vh, 220px);
+  
+  --ink: #061526;
+  --paper: #ffffff;
+  --accent: #0284c7;
+  --accent-light: #38bdf8;
+  --amber: #38bdf8;
+  --amber-light: #bae6fd;
+  --emerald: #0ea5e9;
+  --forest-dark: #040d1a;
+  --forest-card: rgba(7, 25, 47, 0.85);
+  --shadow: rgba(0, 10, 25, 0.7);
+  --blur-tint: 6, 21, 38;
+  
+  font-family: 'Outfit', 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: var(--paper);
+  background: #040d1a;
+  letter-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: auto;
+  background: var(--forest-dark);
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--forest-dark);
+  color: var(--paper);
+  font-family: 'Outfit', 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+button {
+  border: 0;
+  font: inherit;
+  background: transparent;
+}
+
+.site-shell {
+  min-height: 100vh;
+}
+
+/* Scroll Rig */
+.cinema-scroll {
+  position: relative;
+  height: calc(100vh + 3700px + 100vh);
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #040d1a;
+  z-index: 10;
+}
+
+.world,
+.back-stack,
+.sky-img,
+.shade,
+.scene-img,
+.sights-slider,
+.sights-controls,
+.hero-title,
+.intro-copy,
+.story-panel {
+  position: absolute;
+}
+
+.world {
+  inset: 0;
+  overflow: hidden;
+  background: #040d1a;
+}
+
+/* Header (z-index 10) */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto minmax(260px, 1fr);
+  align-items: center;
+  gap: 32px;
+  padding: 16px 40px;
+  color: #ffffff;
+  pointer-events: auto;
+  background: rgba(4, 13, 26, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.site-logo {
+  justify-self: start;
+  font-family: "Outfit", "Hind Siliguri", sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 800;
+  color: #fdf5e8;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-logo::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background: var(--amber);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z'/%3E%3C/svg%3E") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 2vw, 36px);
+}
+
+.site-nav a,
+.language-switcher {
+  color: rgba(253, 245, 232, 0.82);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease;
+}
+
+.site-nav a {
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.site-nav a:hover {
+  color: #fff;
+  background: rgba(229, 155, 76, 0.15);
+  box-shadow: 0 0 16px rgba(229, 155, 76, 0.2);
+}
+
+.language-switcher {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(253, 245, 232, 0.08);
+  border: 1px solid rgba(253, 245, 232, 0.15);
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--paper);
+}
+
+.language-switcher:hover {
+  background: rgba(229, 155, 76, 0.2);
+  border-color: var(--amber);
+}
+
+/* Scene Images (Shared) */
+.scene-img {
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: transform, opacity, filter;
+  pointer-events: none;
+}
+
+/* Sky (z 0) - Sajek Sea of Clouds */
+.sky-img {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0);
+  filter: brightness(var(--back-brightness));
+  z-index: 0;
+}
+
+/* Back Stack (z 1) */
+.back-stack {
+  top: 0;
+  bottom: 0;
+  left: -3vw;
+  right: -3vw;
+  z-index: 1;
+  opacity: var(--back-opacity);
+  transform: translate3d(var(--back-x), var(--back-y), 0) scale(var(--back-scale));
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+}
+
+.back-img {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0);
+  filter: brightness(var(--back-brightness));
+}
+
+.back-bazaar,
+.back-four {
+  top: auto;
+  bottom: 0;
+  left: 48%;
+  right: auto;
+  width: 112%;
+  height: auto;
+  object-fit: cover;
+}
+
+.back-bazaar {
+  z-index: 1;
+  opacity: 0.85;
+  filter: brightness(var(--bazaar-brightness)) saturate(var(--bazaar-saturation));
+  transform: translate3d(-50%, var(--bazaar-y), 0) scale(0.86);
+  border-radius: 50% 50% 0 0;
+  mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 95%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 95%);
+}
+
+.back-four {
+  z-index: 1;
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  transform: translate3d(-50%, calc(var(--four-y) - 110px), 0) scale(var(--four-scale));
+}
+
+/* Sights Slider: High-End Vertically Centered Art Gallery Stage (z 15) */
+.sights-slider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translate3d(var(--sights-enter-x), -50%, 0) scale(var(--sights-scale));
+  transform-origin: center center;
+  z-index: 15;
+  padding: 0;
+  opacity: var(--sights-opacity);
+  visibility: var(--sights-visibility);
+  pointer-events: auto;
+  will-change: transform, opacity;
+}
+
+.sights-track {
+  display: flex;
+  gap: clamp(24px, 2.2vw, 36px);
+  align-items: center;
+  transform: translate3d(var(--sights-shift), 0, 0);
+  transition: transform 680ms cubic-bezier(0.2, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.sights-track.is-jumping {
+  transition: none !important;
+}
+
+/* TRIPLIO Style Destination Gallery Card */
+.sight-card {
+  position: relative;
+  flex: 0 0 clamp(290px, 20.5vw, 345px);
+  height: clamp(430px, 52vh, 485px);
+  border-radius: 32px;
+  overflow: hidden;
+  background: #06182c !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  transform: scale(0.95);
+  opacity: 0.9;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s ease,
+              border-color 0.3s ease,
+              box-shadow 0.4s ease;
+}
+
+/* Active Centerpiece Card: Minimal, refined elevation */
+.sight-card.is-active {
+  transform: scale(1.04);
+  opacity: 1;
+  border-color: rgba(56, 189, 248, 0.85);
+  border-width: 1.5px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 24px rgba(56, 189, 248, 0.2);
+  z-index: 10;
+}
+
+.sight-card:hover:not(.is-active) {
+  transform: scale(0.98);
+  opacity: 0.98;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.sight-card:hover.is-active {
+  transform: scale(1.05);
+  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.75), 0 0 30px rgba(56, 189, 248, 0.25);
+}
+
+.sight-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.sight-card:hover .sight-card-bg,
+.sight-card.is-active .sight-card-bg {
+  transform: scale(1.08);
+}
+
+/* Subtle Natural Bottom Vignette Scrim (Clear Upper 60% for Landscape Brilliance) */
+.sight-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 21, 38, 0.22) 0%,
+    rgba(6, 21, 38, 0) 36%,
+    rgba(6, 21, 38, 0.08) 58%,
+    rgba(4, 15, 28, 0.75) 82%,
+    rgba(2, 10, 20, 0.96) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Top-Right Circular Action Button (Matching Reference Image) */
+.card-arrow-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #061526;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.sight-card:hover .card-arrow-badge,
+.sight-card.is-active .card-arrow-badge {
+  background: #ffffff;
+  color: #0284c7;
+  transform: scale(1.12);
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.4);
+}
+
+/* Bottom Content (Clean, Bold, Elegant Typography) */
+.sight-card-content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 22px 22px;
+  pointer-events: none;
+}
+
+.sight-card-title {
+  margin: 0 0 5px 0;
+  color: #ffffff;
+  font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+
+.sight-card-meta {
+  margin: 0;
+  color: rgba(224, 242, 254, 0.9);
+  font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* Sights Controls (z 25 - Floating Gallery Navigation & Dock) */
+.sights-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  opacity: var(--sights-controls-opacity);
+  transform: translate3d(0, var(--sights-y), 0);
+  will-change: transform, opacity;
+  transition: opacity 0.3s ease;
+}
+
+.sights-controls.is-ready {
+  pointer-events: auto;
+}
+
+/* Floating High-Contrast Side Chevrons */
+.sight-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(6, 21, 38, 0.88) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.25);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 30;
+}
+
+.sight-nav:hover {
+  background: #38bdf8 !important;
+  border-color: #ffffff;
+  color: #061526;
+  transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9), 0 0 35px rgba(56, 189, 248, 0.5);
+}
+
+.sight-nav:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.sight-prev {
+  left: clamp(16px, 2.8vw, 48px);
+}
+
+.sight-next {
+  right: clamp(16px, 2.8vw, 48px);
+}
+
+/* Centered Navigation Controls Below Cards (Matching Reference Mockup) */
+.gallery-dock {
+  position: absolute;
+  bottom: clamp(20px, 4.2vh, 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  z-index: 30;
+}
+
+.dock-glass-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px 8px 18px;
+  border-radius: 999px;
+  background: rgba(6, 21, 38, 0.9);
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 189, 248, 0.2);
+  font-family: 'Outfit', sans-serif;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.dock-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #38bdf8;
+  text-transform: uppercase;
+}
+
+.dock-separator {
+  color: rgba(56, 189, 248, 0.4);
+  font-size: 12px;
+}
+
+.dock-counter {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  background: rgba(56, 189, 248, 0.2);
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.dock-active-title {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.dock-nav-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+}
+
+.dock-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #061526;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dock-btn:hover {
+  background: #38bdf8;
+  color: #061526;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.45);
+}
+
+/* Hero Title (z 3) */
+.hero-title {
+  left: 50%;
+  top: clamp(120px, 18vh, 195px);
+  z-index: 3;
+  width: min(94vw, 1780px);
+  margin: 0;
+  color: #ffffff;
+  font-family: "Outfit", "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(5rem, 14vw, 13.5rem);
+  font-weight: 900;
+  line-height: 0.8;
+  text-align: center;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transform: translate3d(-50%, var(--title-y), 0) scale(var(--title-scale));
+  opacity: var(--title-opacity);
+  will-change: transform, opacity;
+  letter-spacing: -0.03em;
+  background: linear-gradient(180deg, #ffffff 42%, #e0f2fe 75%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Mountain Ridge Foreground (z 4) */
+.bridge-img {
+  left: 50%;
+  bottom: var(--bridge-bottom);
+  z-index: 4;
+  width: min(var(--bridge-width), 2140px);
+  height: auto;
+  transform: translate3d(var(--bridge-x), var(--bridge-y), 0) scale(var(--bridge-scale));
+  transform-origin: 50% 48%;
+  filter: brightness(0.85) contrast(1.15);
+}
+
+/* Splitframe Images (z 6) - Mountain Cliff Framing */
+.splitframe-img {
+  left: 50%;
+  bottom: -2vh;
+  z-index: 6;
+  width: min(118vw, 2240px);
+  height: auto;
+  pointer-events: none;
+  filter: brightness(0.8) contrast(1.2);
+}
+
+.splitframe-left {
+  transform: translate3d(var(--split-left-x), var(--split-left-y), 0) scale(var(--split-left-scale));
+  transform-origin: 21% 52%;
+}
+
+.splitframe-right {
+  transform: translate3d(var(--split-right-x), var(--split-right-y), 0) scale(var(--split-right-scale));
+  transform-origin: 79% 52%;
+}
+
+/* Frame Two Valley Close-up (z 5) - Brotherhood Campfire */
+.frame-two-img {
+  filter: brightness(0.85) contrast(1.15) !important;
+  backdrop-filter: none;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+  width: min(122vw, 2160px);
+  height: auto;
+  opacity: var(--frame2-opacity);
+  transform: translate3d(var(--frame2-x), var(--frame2-y), 0) scale(var(--frame2-scale));
+  transform-origin: 50% 48%;
+}
+
+/* Atmospheric Shade */
+.shade {
+  inset: 0;
+  z-index: var(--shade-z);
+  pointer-events: none;
+  opacity: var(--shade-opacity);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--blur-tint), var(--shade-top-alpha)) 0%,
+    rgba(var(--blur-tint), var(--shade-mid-alpha)) 48%,
+    rgba(var(--blur-tint), var(--shade-bottom-alpha)) 100%
+  );
+}
+
+/* Intro Copy (z 9) */
+.intro-copy {
+  left: 50%;
+  bottom: clamp(56px, 28vh, 400px);
+  z-index: 9;
+  width: min(620px, calc(100vw - 40px));
+  text-align: center;
+  transform: translate3d(-50%, var(--intro-copy-y), 0);
+  opacity: var(--intro-copy-opacity);
+  will-change: transform, opacity;
+}
+
+.intro-copy p {
+  margin: 0 auto;
+  max-width: 600px;
+  color: #fdf5e8;
+  font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.45;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.hero-tags span {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  color: #061526;
+  border-radius: 999px;
+  background: #38bdf8;
+  font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 10px 28px rgba(56, 189, 248, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.hero-tags span:hover {
+  transform: translateY(-2px);
+  background: #7dd3fc;
+}
+
+/* Story Panels (z 10) - Perfectly Centered from All Directions */
+.story-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+  width: min(940px, calc(100vw - 48px));
+  text-align: center;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform, opacity;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-panel h2 {
+  margin: 0 auto;
+  color: #ffffff;
+  font-family: "Outfit", "Hind Siliguri", sans-serif;
+  font-size: clamp(2.2rem, 3.8vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95), 0 12px 40px rgba(0, 0, 0, 0.85);
+  letter-spacing: -0.01em;
+  max-width: 900px;
+}
+
+.story-panel p {
+  width: min(620px, 100%);
+  margin: 20px auto 0;
+  color: rgba(240, 249, 255, 0.95);
+  font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: center;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+}
+
+.story-panel-bridge {
+  top: 50% !important;
+  opacity: var(--panel2-opacity);
+  transform: translate3d(-50%, var(--panel2-y), 0);
+}
+
+.story-panel-bazaar {
+  top: 50% !important;
+  opacity: var(--panel3-opacity);
+  transform: translate3d(-50%, var(--panel3-y), 0);
+}
+
+.facts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(32px, 6vw, 64px);
+  width: min(500px, 100%);
+  margin: 36px auto 0;
+  padding: 0;
+  text-align: center;
+}
+
+.facts dt {
+  color: #38bdf8;
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(2.8rem, 4.5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  text-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+.facts dd {
+  margin: 10px 0 0;
+  color: rgba(240, 249, 255, 0.9);
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+  text-align: center;
+}
+
+.note-button {
+  min-height: 48px;
+  margin: 28px auto 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 28px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(2, 132, 199, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(2, 132, 199, 0.25);
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.note-button:hover {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(2, 132, 199, 0.45);
+}
+
+/* Media Queries */
+@media (max-width: 1500px) {
+  .hero-title {
+    font-size: clamp(4.5rem, 11vw, 10.5rem);
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero-title {
+    top: 14vh;
+    font-size: 6.8rem;
+  }
+  .bridge-img {
+    width: 138vw;
+  }
+  .frame-two-img {
+    width: 132vw;
+  }
+  .facts {
+    gap: 32px;
+    margin-top: 40px;
+  }
+  .facts dt {
+    font-size: 3rem;
+  }
+  .sight-card {
+    flex-basis: clamp(280px, 36vw, 340px);
+    height: clamp(380px, 50vh, 440px);
+  }
+}
+
+@media (max-width: 640px) {
+  .stage {
+    min-height: 640px;
+  }
+  .site-header {
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    padding: 20px;
+  }
+  .site-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-title {
+    top: 15vh;
+    font-size: 4.2rem;
+  }
+  .bridge-img {
+    bottom: 2vh;
+    width: 190vw;
+  }
+  .frame-two-img {
+    width: 176vw;
+  }
+  .intro-copy {
+    bottom: 36px;
+  }
+  .intro-copy p,
+  .story-panel p {
+    font-size: 1rem;
+  }
+  .hero-tags {
+    gap: 8px;
+  }
+  .hero-tags span {
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 0.85rem;
+  }
+  .story-panel {
+    top: 50%;
+  }
+  .story-panel-bazaar {
+    top: 50%;
+  }
+  .facts {
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .facts dt {
+    font-size: 2.4rem;
+  }
+  .sights-slider {
+    padding: 0;
+  }
+  .sights-track {
+    gap: 14px;
+  }
+  .sight-card {
+    flex-basis: min(82vw, 310px);
+    height: clamp(380px, 56vh, 430px);
+    border-radius: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .scene-img,
+  .back-stack,
+  .hero-title,
+  .intro-copy,
+  .story-panel,
+  .sights-track,
+  .sights-slider {
+    transition: none !important;
+  }
+}
